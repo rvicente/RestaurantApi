@@ -5,64 +5,60 @@ import javax.persistence.*;
 @Entity
 @Table(name = "menu_asb")
 public class Menu {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int menuId;
-    private String menuName;
-    private double menuPrice;
-    private String menuDescription;
-    private boolean menuActive;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "menuId", nullable = false)
+    private Integer id;
 
-    public Menu() {
+    @Column(name = "menuName", nullable = false)
+    private String menuName;
+
+    @Column(name = "menuPrice", nullable = false)
+    private Double menuPrice;
+
+    @Column(name = "menuDescription", nullable = false)
+    private String menuDescription;
+
+    @Column(name = "menuActive", nullable = false)
+    private Boolean menuActive = false;
+
+    public Boolean getMenuActive() {
+        return menuActive;
     }
-    public Menu(int menuId, String menuName, double menuPrice, String menuDescription, boolean menuActive) {
-        this.menuId = menuId;
-        this.menuName = menuName;
-        this.menuPrice = menuPrice;
-        this.menuDescription = menuDescription;
+
+    public void setMenuActive(Boolean menuActive) {
         this.menuActive = menuActive;
     }
 
-    public int getMenuId() {
-        return menuId;
-    }
-    public void setMenuId(int menuId) {
-        this.menuId = menuId;
-    }
-    public String getMenuName() {
-        return menuName;
-    }
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-    public double getMenuPrice() {
-        return menuPrice;
-    }
-    public void setMenuPrice(double menuPrice) {
-        this.menuPrice = menuPrice;
-    }
     public String getMenuDescription() {
         return menuDescription;
     }
+
     public void setMenuDescription(String menuDescription) {
         this.menuDescription = menuDescription;
     }
-    public boolean isMenuActive() {
-        return menuActive;
-    }
-    public void setMenuActive(boolean menuActive) {
-        this.menuActive = menuActive;
+
+    public Double getMenuPrice() {
+        return menuPrice;
     }
 
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "menuId=" + menuId +
-                ", menuName='" + menuName + '\'' +
-                ", menuPrice=" + menuPrice +
-                ", menuDescription='" + menuDescription + '\'' +
-                ", menuActive=" + menuActive +
-                '}';
+    public void setMenuPrice(Double menuPrice) {
+        this.menuPrice = menuPrice;
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
