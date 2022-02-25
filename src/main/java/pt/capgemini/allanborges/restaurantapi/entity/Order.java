@@ -1,26 +1,45 @@
 package pt.capgemini.allanborges.restaurantapi.entity;
 
-public class Order {
+import javax.persistence.*;
+import java.util.Date;
+import java.util.UUID;
 
-    private int orderId;
+@Entity
+@Table(name = "order_asb")
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "orderId", nullable = false)
+    private Integer orderId;
+
+    @Column(name = "orderStatus", nullable = false)
     private String orderStatus;
-    private String transactionID;
-    private String orderDateTime;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "orderDateTime", nullable = false)
+    private Date orderDateTime;
+
+    @Column(name = "transactionId", nullable = false)
+    private String transactionId;
+
+    @PrePersist
+    private void onCreate(){
+        orderDateTime = new Date();
+        transactionId = UUID.randomUUID().toString();
+    }
 
     public Order() {
     }
-    public Order(int orderId, String orderStatus, String transactionID, String orderDateTime) {
+    public Order(Integer orderId, String orderStatus) {
         this.orderId = orderId;
         this.orderStatus = orderStatus;
-        this.transactionID = transactionID;
-        this.orderDateTime = orderDateTime;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public Date getOrderDateTime() {
+        return orderDateTime;
     }
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrderDateTime(Date orderDateTime) {
+        this.orderDateTime = orderDateTime;
     }
     public String getOrderStatus() {
         return orderStatus;
@@ -28,26 +47,25 @@ public class Order {
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
-    public String getTransactionID() {
-        return transactionID;
+    public Integer getOrderId() {
+        return orderId;
     }
-    public void setTransactionID(String transactionID) {
-        this.transactionID = transactionID;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
-    public String getOrderDateTime() {
-        return orderDateTime;
+    public String getTransactionId() {
+        return transactionId;
     }
-    public void setOrderDateTime(String orderDateTime) {
-        this.orderDateTime = orderDateTime;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "orderId=" + orderId +
+                "id=" + orderId +
                 ", orderStatus='" + orderStatus + '\'' +
-                ", transactionID='" + transactionID + '\'' +
-                ", orderDateTime='" + orderDateTime + '\'' +
+                ", orderDateTime=" + orderDateTime +
                 '}';
     }
 }
