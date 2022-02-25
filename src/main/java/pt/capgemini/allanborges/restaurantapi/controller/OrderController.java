@@ -14,8 +14,6 @@ public class OrderController {
 
     @PostMapping("/api/v1/addOrder")
     public Order addOrder(@RequestBody Order order){
-        //UUID uuid = UUID.randomUUID();
-        //order.setTransactionID(uuid.toString());
         return orderService.addMenu(order);
     }
 

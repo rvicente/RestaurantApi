@@ -3,11 +3,13 @@ package pt.capgemini.allanborges.restaurantapi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.capgemini.allanborges.restaurantapi.entity.Menu;
+import pt.capgemini.allanborges.restaurantapi.error.MenuNotFoundException;
 import pt.capgemini.allanborges.restaurantapi.repository.MenuRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -34,31 +36,24 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu updateMenu(Integer menuId, Menu menu) {
-        Menu me = menuRepository.findById(menuId).get();
+        Menu existingMenu = menuRepository.findById(menuId).orElse(null);
 
-//        me.setMenuName(menu.getMenuName());
-//        me.setMenuPrice(menu.getMenuPrice());
-//        me.setMenuDescription(menu.getMenuDescription());
-//        me.setMenuActive(menu.getMenuActive());
+        assert existingMenu != null;
+        existingMenu.setMenuName(menu.getMenuName());
+        existingMenu.setMenuPrice(menu.getMenuPrice());
+        existingMenu.setMenuDescription(menu.getMenuDescription());
+        existingMenu.setMenuActive(menu.getMenuActive());
 
-        if(Objects.nonNull(menu.getMenuName()) && !"".equalsIgnoreCase(menu.getMenuName())) {
-            me.setMenuName(menu.getMenuName());
-        }
-        if(Objects.nonNull(menu.getMenuPrice())) {
-            me.setMenuPrice(menu.getMenuPrice());
-        }
-        if(Objects.nonNull(menu.getMenuDescription()) && !"".equalsIgnoreCase(menu.getMenuDescription())) {
-            me.setMenuDescription(menu.getMenuDescription());
-        }
-        if(Objects.nonNull(menu.getMenuActive())) {
-            me.setMenuActive(menu.getMenuActive());
-        }
-
-        return menuRepository.save(me);
+        return menuRepository.save(existingMenu);
     }
 
     @Override
-    public Menu findMenuById(Integer menuId) {
-        return menuRepository.findById(menuId).get();
+    public Menu findMenuById(Integer menuId) throws MenuNotFoundException {
+        Optional<Menu> menu = menuRepository.findById(menuId);
+
+        if (!menu.isPresent()){
+            throw new MenuNotFoundException("Error: Fetch the error");
+        }
+        return menu.get();
     }
 }

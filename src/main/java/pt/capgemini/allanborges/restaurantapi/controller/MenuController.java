@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.capgemini.allanborges.restaurantapi.entity.Menu;
+import pt.capgemini.allanborges.restaurantapi.error.MenuNotFoundException;
 import pt.capgemini.allanborges.restaurantapi.service.MenuService;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,25 +26,18 @@ public class MenuController {
         return menuService.getActiveMenu();
     }
 
-    @PutMapping("/api/v1/updateMenu/{id}")
-    public ResponseEntity<?> updateMenu(@PathVariable ("id") Integer menuId, @RequestBody Menu menu){
+    @PostMapping("/api/v1/updateMenu/{id}")
+    public ResponseEntity<?> updateMenu(@PathVariable("id") Integer menuId, @RequestBody Menu menu){
         try {
-            Menu existProduct = menuService.findMenuById(menuId);
-            menuService.addMenu(menu);
+            menuService.updateMenu(menuId, menu);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/api/v1/getMenuById/{id}")
-    public ResponseEntity<Menu> getMenuById(@PathVariable ("id") Integer menuId){
-        try {
-            Menu menu = menuService.findMenuById(menuId);
-            return new ResponseEntity<>(menu, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/api/v1/getMenuById/{id}")
+    public Menu getMenuById(@PathVariable ("id") Integer menuId) throws MenuNotFoundException {
+        return menuService.findMenuById(menuId);
     }
-
 }
