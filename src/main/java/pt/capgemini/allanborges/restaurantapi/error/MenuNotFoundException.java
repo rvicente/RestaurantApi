@@ -1,12 +1,11 @@
 package pt.capgemini.allanborges.restaurantapi.error;
 
 public class MenuNotFoundException extends Exception{
-
     public MenuNotFoundException() {
         super();
     }
-    public MenuNotFoundException(String msg) {
-        super(msg);
+    public MenuNotFoundException(String message) {
+        super(message);
     }
     public MenuNotFoundException(String message, Throwable cause) {
         super(message, cause);

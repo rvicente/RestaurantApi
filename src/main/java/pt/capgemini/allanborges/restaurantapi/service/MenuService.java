@@ -13,5 +13,5 @@ public interface MenuService {
 
     Menu updateMenu(Integer menuId, Menu menu);
 
-    Menu findMenuById(Integer menuId) throws MenuNotFoundException;
+    Menu findMenuById(Integer menuId);
 }

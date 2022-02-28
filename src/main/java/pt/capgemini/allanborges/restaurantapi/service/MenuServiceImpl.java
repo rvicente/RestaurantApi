@@ -8,7 +8,6 @@ import pt.capgemini.allanborges.restaurantapi.repository.MenuRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -48,12 +47,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu findMenuById(Integer menuId) throws MenuNotFoundException {
-        Optional<Menu> menu = menuRepository.findById(menuId);
-
-        if (!menu.isPresent()){
-            throw new MenuNotFoundException("Error: Fetch the error");
-        }
-        return menu.get();
+    public Menu findMenuById(Integer menuId) {
+        return menuRepository.findById(menuId).get();
     }
 }
