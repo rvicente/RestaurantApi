@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.capgemini.allanborges.restaurantapi.entity.Menu;
 import pt.capgemini.allanborges.restaurantapi.entity.ResponseMenu;
+import pt.capgemini.allanborges.restaurantapi.error.MenuFieldNotAddedException;
 import pt.capgemini.allanborges.restaurantapi.error.MenuNotFoundException;
 import pt.capgemini.allanborges.restaurantapi.repository.MenuRepository;
 
@@ -16,7 +17,12 @@ public class MenuServiceImpl implements MenuService {
     private MenuRepository menuRepository;
 
     @Override
-    public Menu addMenu(Menu menu) {
+    public Menu addMenu(Menu menu) throws MenuFieldNotAddedException {
+
+        if (menu.getMenuName() == null || menu.getMenuPrice() == null || menu.getMenuDescription() == null || menu.getMenuActive() == null) {
+            throw new MenuFieldNotAddedException("MenuServiceImpl Message");
+        }
+
         return menuRepository.save(menu);
     }
 

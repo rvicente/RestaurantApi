@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pt.capgemini.allanborges.restaurantapi.entity.Menu;
 import pt.capgemini.allanborges.restaurantapi.entity.ResponseMenu;
+import pt.capgemini.allanborges.restaurantapi.error.MenuFieldNotAddedException;
 import pt.capgemini.allanborges.restaurantapi.error.MenuNotFoundException;
 import pt.capgemini.allanborges.restaurantapi.service.MenuService;
 
@@ -19,14 +20,11 @@ public class MenuController {
     private MenuService menuService;
 
     @PostMapping("/api/v1/addMenu")
-    public ResponseMenu addMenu(@RequestBody Menu menu){
+    public ResponseMenu addMenu(@RequestBody Menu menu) throws MenuFieldNotAddedException {
         Menu currentMenu = menuService.addMenu(menu);
         List<Menu> currentList = new ArrayList<>();
         currentList.add(currentMenu);
-//
-//        if (currentMenu.getMenuName() == null || currentMenu.getMenuPrice() == null || currentMenu.getMenuDescription() == null || currentMenu.getMenuActive() == null) {
-//            return new ResponseMenu("NOK", new Date().toString(), "500", UUID.randomUUID().toString(), "Error: a Menu field was left blank", currentList);
-//        }
+
         return new ResponseMenu("OK", new Date().toString(), "200", UUID.randomUUID().toString(), "Menu add Success", currentList);
     }
 
