@@ -48,6 +48,7 @@ public class MenuController {
         Menu currentMenu = menuService.findMenuById(menuId);
         List<Menu> currentList = new ArrayList<>();
         currentList.add(currentMenu);
+
         return new ResponseMenu("OK", new Date().toString(), "200", UUID.randomUUID().toString(), "Menu getById Success", currentList);
     }
 }

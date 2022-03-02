@@ -79,9 +79,4 @@ public class ResponseMenu {
         ResponseMenu responseMenu = (ResponseMenu) o;
         return status.equals(responseMenu.status) && sentOn.equals(responseMenu.sentOn) && statusCode.equals(responseMenu.statusCode) && transactionId.equals(responseMenu.transactionId) && msg.equals(responseMenu.msg) && resValues.equals(responseMenu.resValues);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(status, sentOn, statusCode, transactionId, msg, resValues);
-    }
 }

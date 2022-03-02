@@ -3,12 +3,11 @@ package pt.capgemini.allanborges.restaurantapi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.capgemini.allanborges.restaurantapi.entity.Menu;
+import pt.capgemini.allanborges.restaurantapi.entity.ResponseMenu;
 import pt.capgemini.allanborges.restaurantapi.error.MenuNotFoundException;
 import pt.capgemini.allanborges.restaurantapi.repository.MenuRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -47,7 +46,13 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu findMenuById(Integer menuId) {
-        return menuRepository.findById(menuId).get();
+    public Menu findMenuById(Integer menuId) throws MenuNotFoundException {
+        Optional<Menu> menu = menuRepository.findById(menuId);
+
+        if (menu.isEmpty()){
+            throw new MenuNotFoundException("MenuServiceImpl Message");
+        }
+
+        return menu.get();
     }
 }
